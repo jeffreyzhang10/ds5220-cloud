@@ -9,7 +9,7 @@ In this lab, you'll deploy a CloudFormation template that creates multiple AWS r
 By the end of this lab, you will be able to:
 - Deploy a CloudFormation stack from a template file
 - Navigate the AWS Console to locate created resources
-- Understand the relationships between EC2, IAM, S3, and Security Groups
+- Begin to understand the relationships between EC2, IAM, S3, and Security Groups
 - Verify resource functionality through testing
 
 ## Prerequisites
@@ -21,9 +21,14 @@ By the end of this lab, you will be able to:
 
 ## Part 1: Deploy the CloudFormation Stack
 
+### Step 0: Download the Reference Architecture
+
+[**Download**](https://s3.amazonaws.com/uvasds-systems/ds5220/refarch-1-custom-ec2-with-s3-bucket.docx) the Word document and use it to enter your resource details.
+
 ### Step 1: Open the Template in CloudFormation
-1. Open the AWS Console and be sure you are signed in.
-2. Open the instructor's [**Launch Template**](https://us-east-1.console.aws.amazon.com/cloudformation/home/?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.amazonaws.com/uvasds-systems/cloudformation/ec2-with-bucket-policy.yaml&stackName=refarch1).
+1. Browse the [YAML template](ec2-with-bucket-policy.yaml) manually
+2. Open the AWS Console and be sure you are signed in.
+3. Open the instructor's [**Launch Template**](https://us-east-1.console.aws.amazon.com/cloudformation/home/?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.amazonaws.com/uvasds-systems/cloudformation/ec2-with-bucket-policy.yaml&stackName=refarch1).
 
 ### Step 2: Quick create stack
 1. **Stack name**: Leave the default value for this, `refarch1`.
@@ -54,8 +59,8 @@ Now that your stack is deployed, let's find and examine each resource it created
 3. Record the following information:
    - **Instance ID**: `i-xxxxxxxxxxxxxxxxx`
    - **Public IP address**: `x.x.x.x`
+   - **Private IP address**: `x.x.x.x`
    - **Instance type**: Should be `t3.micro`
-   - **Instance state**: Should be `Running`
 
 **Test the instance:**
 - Copy the public IP address
@@ -67,9 +72,7 @@ Now that your stack is deployed, let's find and examine each resource it created
 1. From the EC2 console, go to **Security Groups** (left sidebar under "Network & Security")
 2. Find the security group with your stack name (e.g., `lab-infrastructure-ec2-sg`)
 3. Click on the security group and examine the **Inbound rules** tab
-4. Record what you find:
-   - **Rule 1**: Port _____, Source _____, Description _____
-   - **Rule 2**: Port _____, Source _____, Description _____
+4. Within the inbound rules, what ports are allowed?
 
 **Questions to consider:**
 - What traffic is allowed into the EC2 instance?
@@ -146,13 +149,7 @@ aws s3 rm s3://[your-bucket-name]/test.txt
 1. Return to **CloudFormation** → **Stacks**
 2. Click on your stack name
 3. Go to the **Outputs** tab
-4. Record the output values where possible in the worksheet:
-   - InstanceId: _____
-   - InstancePublicIP: _____
-   - SecurityGroupId: _____
-   - S3BucketName: _____
-   - S3BucketArn: _____
-   - IAMRoleArn: _____
+4. Record the output values and identify any remaining resources on the worksheet.
 
 **Question:** Why might these outputs be useful if you were building a larger infrastructure?
 
@@ -160,7 +157,8 @@ aws s3 rm s3://[your-bucket-name]/test.txt
 
 1. In CloudFormation, click the **Resources** tab
 2. Count how many resources were created: _____
-3. List each resource type and its logical name from the template
+3. List each resource type and its logical name from the template.
+4. Take a screenshot of the Resources tab for submission and insert it into the reference architecture document.
 
 This tab shows the complete inventory of what CloudFormation created for you.
 
@@ -177,9 +175,16 @@ This tab shows the complete inventory of what CloudFormation created for you.
 
 **Note:** If deletion fails, check the Events tab for errors. S3 buckets must be empty to delete.
 
+## Deliverables
+
+1. Insert the screenshot of the Resources tab output from your CloudFormation stack into the reference architecture.
+2. Answer the following questions within the reference architecture. Note that how you answer each question is likely to change in the coming weeks.
+3. Submit a PDF version of your reference architecture in Canvas to complete the lab.
+
 ## Discussion Questions
 
 1. What advantages does CloudFormation provide compared to manually creating these resources through the console?
-2. How does the IAM role enable the EC2 instance to access S3 without storing credentials?
-3. What would happen if you deleted the S3 bucket manually before deleting the CloudFormation stack?
-4. Why is the security group configured to allow only ports 22 and 80?
+2. Can you identify the created resources that have to do with computational resources? network security? various types of storage?
+3. How does the IAM role enable the EC2 instance to access S3 without storing credentials?
+4. What would happen if you deleted the S3 bucket manually before deleting the CloudFormation stack?
+5. Why is the security group configured to allow only ports 22 and 80? What are those ports used for?
