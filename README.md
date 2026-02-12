@@ -7,6 +7,8 @@ An intensive overview of cloud infrastructure and their role in data science. To
 ## Class Content
 
 - [**EC2 Bootstrapping**](reference-iac/bootstrapping/README.md)
+- [**Working with S3**](reference-iac/python/S3.md)
+- [**Python Scripting**](reference-iac/python/README.md) - with [example](reference-iac/python/basic-client-template.py)
 
 ## Labs
 
